@@ -14,14 +14,14 @@ public class Spawner : MonoBehaviour
     {
 
         valueZ = -25;
-        for (int i = 0; i <10; i++) AddRoad();
+        for (int i = 0; i <25; i++) AddRoad();
 
     }
 
     void Update()
     {
 
-        if (ship.transform.position.z > (valueZ - 25 * 2))
+        if (ship.transform.position.z > (valueZ - 25 * 20))
         {
             AddRoad();
             Destroy(roadIns[0]);
@@ -35,7 +35,7 @@ public class Spawner : MonoBehaviour
     {
 
         valueZ = valueZ + 25;
-        roadIns.Add(Instantiate(tunnel, new Vector3(0, 0, valueZ), tunnel.transform.rotation));
+        roadIns.Add(Instantiate(tunnel, new Vector3(0, 0, valueZ), tunnel.transform.rotation, GameObject.Find("Environment").transform) as GameObject);
 
     }
 }
