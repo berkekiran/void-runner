@@ -4,9 +4,10 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - tunnel1
-  - tunnel2
   - Environment
+  - Enemy
+  - Bullet
+  - BulletEnemy
   layers:
   - Default
   - TransparentFX
