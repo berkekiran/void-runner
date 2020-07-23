@@ -25,6 +25,9 @@ public class spaceShipMovement : MonoBehaviour
     public AudioSource fireVoice;
     public AudioSource gameMusic;
     public AudioSource explosionVoice;
+    public AudioSource button;
+    public AudioSource move;
+    
     void Start()
     {
         Time.timeScale = 0;
@@ -43,6 +46,7 @@ public class spaceShipMovement : MonoBehaviour
     }
 
     public void StartGame(){
+        button.Play();
         Time.timeScale = 1;
         score.SetActive(true);
         scoreEnd.SetActive(false);
@@ -80,11 +84,15 @@ public class spaceShipMovement : MonoBehaviour
 
     public void left()
     {
+        if(!move.isPlaying)
+            move.Play();
         if(movePosition > 0)
             movePosition--;
     }
     public void right()
     {
+        if(!move.isPlaying)
+            move.Play();
         if(movePosition < 2)
             movePosition++;
     }
@@ -101,13 +109,13 @@ public class spaceShipMovement : MonoBehaviour
         if(other.gameObject.CompareTag("BulletEnemy")){
             isThisEnd = true;
             StartCoroutine(EndGame());
-            explosionVoice.Play();
         }
     }
 
     IEnumerator EndGame()
     {
-        yield return new WaitForSeconds(0.125f);
+        explosionVoice.Play();
+        yield return new WaitForSeconds(0.25f);
         if(isThisEnd){
             Time.timeScale = 0;
             score.SetActive(false);
@@ -126,6 +134,7 @@ public class spaceShipMovement : MonoBehaviour
     }
 
     public void Replay(){
+        button.Play();
         Destroy(GameObject.FindGameObjectWithTag("Enemy"));
         ManagerScript.Instance.Score = 0;
         movePosition = 1;
@@ -141,6 +150,7 @@ public class spaceShipMovement : MonoBehaviour
         InGameReplayButton.SetActive(true);
         Logo.SetActive(false);
         LogoEnd.SetActive(false);
+        EnemySpawner.canSpawn = true;
     }
 
 }

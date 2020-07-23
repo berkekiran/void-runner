@@ -14,7 +14,6 @@ public class EnemyMovement : MonoBehaviour
     public Transform leftFirePosition;
     public Transform rightFirePosition;
     private bool scoreAdd = true;
-    public AudioSource enemyExplosionVoice;
 
 
     void Start()
@@ -61,7 +60,6 @@ public class EnemyMovement : MonoBehaviour
 
     private void OnTriggerEnter(Collider other) {
         if(other.tag == "Player"){
-            //enemyExplosionVoice.Play();
             moveBack = true;
             moveSide = true;
             targetLock = false;
@@ -69,15 +67,16 @@ public class EnemyMovement : MonoBehaviour
         }
         if (other.tag == "Bullet")
         {
-           
             StartCoroutine(DestroyEnemy());
         }
     }
 
     IEnumerator DestroyEnemy()
     {
+        GameObject.Find("SpaceShip").GetComponent<spaceShipMovement>().explosionVoice.Play();
         yield return new WaitForSeconds(0.125f);
         Destroy(this.gameObject);
+        EnemySpawner.canSpawn = true;
         if(scoreAdd){
             ManagerScript.Instance.Score += 1;
             scoreAdd = false;
@@ -88,6 +87,7 @@ public class EnemyMovement : MonoBehaviour
     {
         Instantiate(bullet, rightFirePosition.transform.position, new Quaternion());
         Instantiate(bullet, leftFirePosition.transform.position, new Quaternion());
+        GameObject.Find("SpaceShip").GetComponent<spaceShipMovement>().fireVoice.Play();
     }
 
 }

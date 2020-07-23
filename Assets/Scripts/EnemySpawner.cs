@@ -8,6 +8,8 @@ public class EnemySpawner : MonoBehaviour
     public List<GameObject> enemyIns;
     public GameObject ship;
     public int valueZ;
+    public AudioSource spawn;
+    public static bool canSpawn = false;
 
     void Start()
     {
@@ -17,12 +19,17 @@ public class EnemySpawner : MonoBehaviour
     void Update()
     {
 
-        if (enemyIns.Count < 1)
-            SpawnEnemy();
+        if (enemyIns.Count < 1){
+            if(Time.timeScale != 0)
+              SpawnEnemy();
+        }
 
+        if(canSpawn){
         if (enemyIns[enemyIns.Count-1] == null){
             enemyIns.Remove(enemyIns[enemyIns.Count-1]);
             valueZ = 0;
+            canSpawn = false;
+        }
         }
 
     }
@@ -32,5 +39,6 @@ public class EnemySpawner : MonoBehaviour
     {
         valueZ = valueZ + 1000;
         enemyIns.Add(Instantiate(enemy, new Vector3(0, 0, valueZ), enemy.transform.rotation, GameObject.Find("Enemies").transform) as GameObject);
+        spawn.Play();
     }
 }
