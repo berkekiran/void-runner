@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class BulletEnemy : MonoBehaviour
 {
+    public AudioSource fireVoice;
     public float hiz = 3f;
     void Start()
     {
@@ -17,6 +19,7 @@ public class BulletEnemy : MonoBehaviour
     }
 
     private void OnTriggerEnter(Collider other) {
+        fireVoice.Play();
         if(other.tag == "Player")
             Destroy(this.gameObject);
     }

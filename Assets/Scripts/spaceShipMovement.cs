@@ -22,7 +22,9 @@ public class spaceShipMovement : MonoBehaviour
     public GameObject Logo;
     public GameObject LogoEnd;
     private bool isThisEnd = true;
-
+    public AudioSource fireVoice;
+    public AudioSource gameMusic;
+    public AudioSource explosionVoice;
     void Start()
     {
         Time.timeScale = 0;
@@ -37,6 +39,7 @@ public class spaceShipMovement : MonoBehaviour
         InGameReplayButton.SetActive(false);
         Logo.SetActive(true);
         LogoEnd.SetActive(false);
+        gameMusic.Play();
     }
 
     public void StartGame(){
@@ -90,12 +93,15 @@ public class spaceShipMovement : MonoBehaviour
     {
         Instantiate(bullet, rightFirePosition.transform.position, new Quaternion());
         Instantiate(bullet, leftFirePosition.transform.position, new Quaternion());
+        fireVoice.Play();
     }
 
     private void OnTriggerEnter(Collider other) {
+        
         if(other.gameObject.CompareTag("BulletEnemy")){
             isThisEnd = true;
             StartCoroutine(EndGame());
+            explosionVoice.Play();
         }
     }
 

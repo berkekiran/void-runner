@@ -14,6 +14,8 @@ public class EnemyMovement : MonoBehaviour
     public Transform leftFirePosition;
     public Transform rightFirePosition;
     private bool scoreAdd = true;
+    public AudioSource enemyExplosionVoice;
+
 
     void Start()
     {
@@ -59,13 +61,17 @@ public class EnemyMovement : MonoBehaviour
 
     private void OnTriggerEnter(Collider other) {
         if(other.tag == "Player"){
+            //enemyExplosionVoice.Play();
             moveBack = true;
             moveSide = true;
             targetLock = false;
             Destroy(this.GetComponent<BoxCollider>());
         }
-        if(other.tag == "Bullet")
+        if (other.tag == "Bullet")
+        {
+           
             StartCoroutine(DestroyEnemy());
+        }
     }
 
     IEnumerator DestroyEnemy()

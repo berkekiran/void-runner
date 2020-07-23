@@ -5,6 +5,8 @@ using UnityEngine;
 public class bulletScript : MonoBehaviour
 {
     public float hiz = 3f;
+    
+
     void Start()
     {
         Destroy(gameObject, 2f);
@@ -16,9 +18,17 @@ public class bulletScript : MonoBehaviour
         transform.position += new Vector3(0, 0, hiz*Time.deltaTime);
     }
 
-    private void OnTriggerEnter(Collider other) {
-        if(other.tag == "Enemy")
+    private void OnTriggerEnter(Collider other)
+    {
+        
+        if (other.tag == "Enemy")
+        {
+           
             Destroy(this.gameObject);
+            
+        }
+        
     }
+   
 
 }
